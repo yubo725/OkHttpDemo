@@ -1,29 +1,40 @@
 package com.test.testokhttp.http;
 
 import android.content.Context;
-import android.util.Log;
+import android.text.TextUtils;
 
 import com.test.testokhttp.BaseHttpManager;
+import com.test.testokhttp.bean.UserBean;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
 
-/**
- * Created by yubo7 on 2016/9/6.
- */
-public class TestPostHttpManager extends BaseHttpManager<String> {
+public class TestPostHttpManager extends BaseHttpManager<UserBean> {
 
     public TestPostHttpManager(Context context, String url, DataType returnDataType) {
         super(context, url, returnDataType);
     }
 
     @Override
-    public String parseXml(XmlPullParser xmlPullParser) {
+    public UserBean parseXml(XmlPullParser xmlPullParser) {
         return null;
     }
 
     @Override
-    public String parseJson(String json) {
-        Log.d("yubo", "TestPostHttpManager return: " + json);
-        return json;
+    public UserBean parseJson(String json) {
+        try {
+            if(!TextUtils.isEmpty(json)) {
+                JSONObject jobj = new JSONObject(json);
+                UserBean bean = new UserBean();
+                bean.setName(jobj.getString("name"));
+                bean.setId(jobj.getString("id"));
+                bean.setAge(jobj.getInt("age"));
+                return bean;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

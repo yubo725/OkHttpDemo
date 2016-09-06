@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.test.testokhttp.bean.UserBean;
 import com.test.testokhttp.http.GetUserHttpManager;
 import com.test.testokhttp.http.TestPostHttpManager;
 import com.test.testokhttp.http.TestUploadHttpManager;
@@ -62,8 +63,10 @@ public class TestActivity extends AppCompatActivity {
     public void testPost(View view) {
         String url = "http://192.168.1.170:8088/TestOkHttp/test_post.php";
         TestPostHttpManager manager = new TestPostHttpManager(this, url, BaseHttpManager.DataType.JSON);
-        manager.addHeader("Authorization", "Bearer " + token);
-        manager.setOnRequestListener(new BaseHttpManager.OnRequestListener<String>() {
+        //给请求添加Header
+        manager.addHeader("Authorization", "Bearer 12345");
+        //设置请求的回调监听器
+        manager.setOnRequestListener(new BaseHttpManager.OnRequestListener<UserBean>() {
             @Override
             public void onStart() {
                 Log.d("yubo", "onStart...");
@@ -75,7 +78,7 @@ public class TestActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onSuccess(String result) {
+            public void onSuccess(UserBean result) {
                 if(result != null) {
                     Log.d("yubo", "onSuccess: " + result);
                 }else {
@@ -88,9 +91,11 @@ public class TestActivity extends AppCompatActivity {
                 Log.d("yubo", "onFailure: " + e.toString());
             }
         });
+        //请求参数
         Map<String, String> params = new HashMap<>();
         params.put("name", "zhangsan");
         params.put("age", "25");
+        //开始请求，指定请求方式为POST
         manager.startManager(params, BaseHttpManager.Method.POST);
     }
 
