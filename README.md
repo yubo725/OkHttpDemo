@@ -1,0 +1,2 @@
+# OkHttpDemo
+OkHttp的使用Demo，包括一个封装了OkHttp的网络请求类BaseHttpManager，可以极大地简化OkHttp的使用。
