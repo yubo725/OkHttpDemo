@@ -88,3 +88,4 @@ public void startPostRequest(Map<String, String> strParams, Map<String, File> fi
 ```
 public static void download(Context context, String url, String filePath, DownloadListener listener)
 ```
+其中context为上下文，url为下载地址，filePath为下载后的文件保存路径，listener为下载的监听器，可处理下载进度等。
